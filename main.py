@@ -8,6 +8,7 @@ import signal
 import threading
 import time
 import websocket
+from tabulate import tabulate
 
 # Global variable to store the latest BTC price
 latest_btc_price = None
@@ -293,14 +294,19 @@ class BitcoinPaperTrader:
         if not self.transaction_history:
             print("No transactions have been made yet.\n")
             return
-        print("===== Transaction History =====")
+        headers = ["Timestamp", "Type", "Amount (USD)", "Amount (BTC)", "Price per BTC (USD)"]
+        table = []
         for txn in self.transaction_history:
-            timestamp = txn['timestamp']
-            txn_type = txn['type'].capitalize()
-            amount_usd = txn['amount_usd']
-            btc = txn['btc']
-            price = txn['price_per_btc']
-            print(f"{timestamp} | {txn_type}: ${amount_usd:,.2f} | {btc:.6f} BTC @ ${price:,.2f} per BTC")
+            row = [
+                txn['timestamp'],
+                txn['type'].capitalize(),
+                f"${txn['amount_usd']:,.2f}",
+                f"{txn['btc']:.6f}",
+                f"${txn['price_per_btc']:,.2f}"
+            ]
+            table.append(row)
+        print("===== Transaction History =====")
+        print(tabulate(table, headers=headers, tablefmt="pretty"))
         print("================================\n")
 
     def reset_trader(self):
@@ -386,7 +392,7 @@ def main():
         elif choice == '7':
             trader.reset_trader()
         elif choice == '8':
-            print("Are Ya Winnin Son!?")
+            print("are ya winnin son!?")
             if ws_app:
                 ws_app.close()
             sys.exit(0)

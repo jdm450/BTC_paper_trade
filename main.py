@@ -281,11 +281,13 @@ class BitcoinPaperTrader:
             return
         current_total = self.cash_balance + self.btc_balance * current_price
         pl = current_total - self.starting_total
+        pl_percent = ((current_total - self.starting_total) / self.starting_total) * 100
         print(f"Current Bitcoin Price: ${current_price:,.2f}")
         print(f"Cash Balance: ${self.cash_balance:,.2f}")
         print(f"Bitcoin Balance: {self.btc_balance:.6f} BTC")
         print(f"Total Portfolio Value: ${current_total:,.2f}")
-        print(f"Total P/L: ${pl:,.2f}\n")
+        print(f"Total P/L: ${pl:,.2f}")
+        print(f"P/L Percent: {pl_percent:.2f}%\n")
 
     def view_transaction_history(self):
         """

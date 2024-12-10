@@ -339,6 +339,9 @@ def display_menu():
     print("8. Exit")
     print("==========================================")
 
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def signal_handler(sig, frame):
     """
     Handles keyboard interrupt signals to exit gracefully.
@@ -373,6 +376,7 @@ def main():
     trader = BitcoinPaperTrader()
 
     while True:
+        clear_console()
         display_menu()
         choice = input("Select an option (1-8): ").strip()
         print()  # For better readability
@@ -398,6 +402,8 @@ def main():
             sys.exit(0)
         else:
             print("Invalid selection. Please choose a number between 1 and 8.\n")
+        
+        input("Press Enter to continue...")  # Pause before clearing the console
 
 if __name__ == "__main__":
     # Ensure that the websocket-client library is installed
